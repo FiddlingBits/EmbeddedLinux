@@ -2,6 +2,7 @@
 ## Toolchain
 ### Set Up
 ```
+$ cd ~/git/
 $ git clone https://github.com/crosstool-ng/crosstool-ng.git
 $ cd crosstool-ng
 $ ./bootstrap
@@ -49,6 +50,7 @@ $ qemu-arm hello.exe
 ## Bootloader
 ### Set Up
 ```
+$ cd ~/git/
 $ git clone git://git.denx.de/u-boot.git
 $ cd u-boot/
 ```
@@ -63,6 +65,7 @@ $ cp MLO u-boot.img ~/scratch/bbb/
 ## Kernel
 ### Set Up
 ```
+$ cd ~/git/
 $ git clone https://git.kernel.org/pub/scm/linux/kernel/git/stable/linux.git
 $ cd linux
 $ git checkout linux-6.1.y
@@ -91,6 +94,7 @@ $ cp arch/arm/boot/zImage arch/arm/boot/dts/versatile-pb.dtb ~/scratch/qemu/
 ## Root File System
 ### Set Up
 ```
+$ cd ~/git/
 $ git clone git://busybox.net/busybox.git
 $ cd busybox
 ```
@@ -190,6 +194,7 @@ $ sudo cp /mnt/stick/am335x-boneblack.dtb /mnt/stick/MLO /mnt/stick/u-boot.img /
 $ ls -al /mnt/boot/
 $ sudo dd if=/mnt/stick/rootfs.ext2 of=/dev/mmcblk0p2
 $ sudo mount /dev/mmcblk0p2 /mnt/rootfs/
+$ ls -al /mnt/rootfs/
 $ sudo umount /mnt/stick/ /mnt/boot/ /mnt/rootfs/ 
 ```
 ## Boot Initial RAM File System (initramfs)
