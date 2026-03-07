@@ -25,6 +25,8 @@ $ sudo mount /dev/${SD_CARD}1 /mnt/boot
 $ sudo docker cp embedded-linux-container:/home/builder/k3-image-gen/tiboot3-am62x-gp-evm.bin /mnt/boot/tiboot3.bin
 $ sudo docker cp embedded-linux-container:/home/builder/build/beagleplay/a53/tispl.bin /mnt/boot
 $ sudo docker cp embedded-linux-container:/home/builder/build/beagleplay/a53/u-boot.img /mnt/boot
+$ sudo docker cp embedded-linux-container:/home/builder/build/beagleplay/kernel/arch/arm64/boot/Image.gz /mnt/boot
+$ sudo docker cp embedded-linux-container:/home/builder/build/beagleplay/kernel//arch/arm64/boot/dts/ti/k3-am625-beagleplay.dtb /mnt/boot
 $ sudo umount /mnt/boot
 ```
 ## Detach And Unbind SD Card From WSL Using PowerShell Administrator
