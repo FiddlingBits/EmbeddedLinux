@@ -26,9 +26,11 @@ RUN apt install -y \
   python3-pexpect  \
   python3-pip      \
   python3-subunit  \
+  python3-venv     \
   socat            \
   sudo             \
   texinfo          \
+  tree             \
   unzip            \
   wget             \
   xterm            \

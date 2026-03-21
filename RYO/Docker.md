@@ -1,6 +1,7 @@
 # Embedded Linux
 ## Build Docker Image
 ```
+$ cd RYO
 $ docker build --no-cache -t embedded-linux-ryo-image .
 ```
 ## Create Docker Container
