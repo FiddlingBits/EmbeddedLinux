@@ -20,7 +20,9 @@ $ sync
 ## Yocto Project
 ### Copy Bootloader, Kernel, And Root File System
 ```
+$ docker start embedded-linux-build-system-rpi5-container
 $ FILE=$(sudo docker exec embedded-linux-build-system-rpi5-container sh -c 'ls /home/builder/build/yocto-project/tmp/deploy/images/raspberrypi5/*.rootfs.wic.bz2')
+$ docker stop embedded-linux-build-system-rpi5-container
 $ sudo docker cp embedded-linux-build-system-rpi5-container:$FILE /tmp/
 $ bzcat /tmp/$(basename $FILE) | sudo dd status=progress of=/dev/$SD_CARD
 $ sync

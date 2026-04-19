@@ -1,10 +1,11 @@
 # Embedded Linux
 ## Raspberry Pi 5
 ### Build System
-1. [Docker](RPi5/Build-System/Docker.md)
-2. [Buildroot](RPi5/Build-System/Buildroot.md)
-3. [Yocto Project](RPi5/Build-System/Yocto-Project.md)
-4. [Custom Application](RPi5/Build-System/Custom-Application.md)
+1. [Docker](RPi5/BuildSystem/Docker.md)
+2. [Buildroot](RPi5/BuildSystem/Buildroot.md)
+3. [Yocto Project](RPi5/BuildSystem/Yocto-Project.md)
+4. [Set Up](RPi5/BuildSystem/Set-Up.md)
+4. [Testing](RPi5/BuildSystem/Testing.md)
 ### Roll Your Own
 1. [Docker](RPi5/RYO/Docker.md)
 2. [Toolchain](RPi5/RYO/Toolchain.md)

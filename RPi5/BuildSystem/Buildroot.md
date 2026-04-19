@@ -10,7 +10,7 @@ $ tar -xvf /tmp/buildroot-2026.02.tar.xz -C $HOME/toolchain/
 ```
 ## Create Custom Application
 ```
-$ cat << 'EOF' > $HOME/build/buildroot/custom-application/custom-application.c
+$ cat << 'EOF' > $HOME/build/buildroot/custom-application/hello-world.c
 #include <stdio.h>
 int main(void)
 {
@@ -19,10 +19,10 @@ int main(void)
 }
 EOF
 $ cat << 'EOF' > $HOME/build/buildroot/custom-application/Makefile
-custom-application: custom-application.c
-	$(CC) -o $@ $^
+hello-world: hello-world.c
+	$(CC) -o $@ $^ -g
 clean:
-	rm custom-application
+	rm hello-world
 EOF
 $ cat << 'EOF' > $HOME/build/buildroot/custom-application/Config.in
 config BR2_PACKAGE_CUSTOM_APPLICATION
@@ -38,7 +38,7 @@ define CUSTOM_APPLICATION_BUILD_CMDS
 	$(MAKE) CC="$(TARGET_CC)" -C $(@D)
 endef
 define CUSTOM_APPLICATION_INSTALL_TARGET_CMDS
-	$(INSTALL) -D -m 0755 $(@D)/custom-application $(TARGET_DIR)/usr/bin
+	$(INSTALL) -D -m 0755 $(@D)/hello-world $(TARGET_DIR)/usr/bin
 endef
 $(eval $(generic-package))
 EOF
@@ -49,9 +49,48 @@ EOF
 $ cat << 'EOF' > $HOME/build/buildroot/custom-application/external.mk
 include $(BR2_EXTERNAL_CUSTOM_PATH)/custom-application.mk
 EOF
+```
+## Build
+```
 $ cd $HOME/toolchain/buildroot-2026.02/
+$ make distclean O=$HOME/build/buildroot/
 $ make raspberrypi5_defconfig O=$HOME/build/buildroot/ BR2_EXTERNAL=$HOME/build/buildroot/custom-application/
+$ echo "BR2_INIT_SYSTEMD=y" >> $HOME/build/buildroot/.config
 $ echo "BR2_PACKAGE_CUSTOM_APPLICATION=y" >> $HOME/build/buildroot/.config
+$ echo "BR2_PACKAGE_DROPBEAR=y" >> $HOME/build/buildroot/.config # This And BR2_PACKAGE_HOST_ENVIRONMENT_SETUP Needed For Custom-Application.md
+$ echo "BR2_PACKAGE_GDB=y" >> $HOME/build/buildroot/.config
+$ echo "BR2_PACKAGE_HOST_ENVIRONMENT_SETUP=y" >> $HOME/build/buildroot/.config
+$ echo "BR2_PACKAGE_HOST_GDB=y" >> $HOME/build/buildroot/.config
+$ echo 'BR2_STRIP_EXCLUDE_FILES="hello-world"' >> $HOME/build/buildroot/.config
 $ make olddefconfig O=$HOME/build/buildroot/
 $ make all O=$HOME/build/buildroot/
+$ make sdk O=$HOME/build/buildroot/
+```
+## Toolchain
+### Install
+```
+$ tar -xvf $HOME/build/buildroot/images/aarch64-buildroot-linux-gnu_sdk-buildroot.tar.gz -C $HOME/toolchain/
+```
+### Configure `.bashrc`
+```
+$ echo 'export PATH="$PATH:$HOME/toolchain/aarch64-buildroot-linux-gnu_sdk-buildroot/bin/"' >> $HOME/.bashrc
+$ source $HOME/.bashrc # Reload
+```
+### Verify
+```
+$ aarch64-linux-gcc --version
+```
+## Debug Remotely
+### Raspberry Pi
+```
+# gdbserver localhost:12345 hello-world
+```
+### Docker Container
+```
+$ aarch64-linux-gdb hello-world
+(gdb) target remote 192.168.137.50:12345
+(gdb) break main
+(gdb) c
+(gdb) backtrace
+(gdb) q
 ```
